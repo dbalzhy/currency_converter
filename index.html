@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-i18n@8/dist/vue-i18n.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{ $t('welcome') }}</h2>
+        <div class="converter">
+            <input v-model="amount" placeholder="Enter amount" />
+            <select v-model="fromCurrency">
+                <option v-for="(rate, currency) in rates" :key="currency" :value="currency">
+                    {{ currency }}
+                </option>
+            </select>
+
+            <button id="swap_cur" @click="swapCurrencies" aria-label="Swap currencies">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M11 5V2L7 6l4 4V7c4.337 0 5.718 2.805 6.006 4.992l1.994-.17C19.294 7.721 17.207 5 11 5zm-6 8c-4.337 0-5.718-2.805-6.006-4.992L0 8.17C.706 13.279 2.793 16 9 16v3l4-4-4-4v3z" />
+                </svg>
+            </button>
+
+            <select v-model="toCurrency">
+                <option v-for="(rate, currency) in rates" :key="currency" :value="currency">
+                    {{ currency }}
+                </option>
+            </select>
+        </div>
+        <p>{{ convertedAmount }} {{ toCurrency }}</p>
+
+        <button @click="convertCurrency">{{ $t('saveHistory') }}</button>
+
+        <h3>{{ $t('history') }}</h3>
+        <ul>
+            <li v-for="entry in history" :key="entry.date">
+                {{ entry.amount }} {{ entry.from }} = {{ entry.result }} {{ entry.to }} on {{ entry.date }}
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
